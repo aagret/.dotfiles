@@ -1,0 +1,117 @@
+# ------------------------------------
+# bash shell alias and function
+# ------------------------------------
+
+###########
+## alias ##
+###########
+
+# connect to piSwarm
+alias pi1='ssh pi4-1 ; clear'
+alias pi2='ssh pi4-2 ; clear'
+alias pi3='ssh pi4-3 ; clear'
+alias pi4='ssh pi4-4 ; clear'
+alias pi5='ssh pi4-5 ; clear'
+
+alias ls='ls  --color=auto --group-directories-first'
+alias ll='ls -alFC --color=auto --group-directories-first'
+alias la='ls -lhNFA --color=auto --group-directories-first'
+alias l='ls -CF --color=auto --group-directories-first'
+
+# do not delete / or prompt if deleting more than 3 files at a time #
+alias rm='rm -I --preserve-root'
+ 
+# confirmation #
+alias mv='mv -i'
+alias cp='cp -i'
+alias ln='ln -i'
+ 
+# Parenting changing perms on / #
+alias chown='chown --preserve-root'
+alias chmod='chmod --preserve-root'
+alias chgrp='chgrp --preserve-root'
+
+## pass options to free ##
+alias free='free -m -l -t'
+ 
+## get top process eating memory
+alias mem='ps auxf | sort -nr -k 4 | more'
+alias mem10='ps auxf | sort -nr -k 4 | head -10'
+ 
+## get top process eating cpu ##
+alias cpu='ps auxf | sort -nr -k 3'
+alias cpu10='ps auxf | sort -nr -k 3 | head -10'
+ 
+## Get server cpu info ##
+alias cpuinfo='lscpu'
+ 
+ 
+## get GPU ram on desktop / laptop##
+alias gpumeminfo='grep -i --color memory /var/log/Xorg.0.log'
+
+alias grep='grep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'
+
+#alias diff="diff --color=auto"
+
+alias sdn="sudo shutdown now"
+alias ka="killall"
+
+alias port="netstat -tulanp | more"
+
+alias e="$EDITOR"
+alias sS="sudo systemctl"
+alias n="nano"
+alias sn="sudo nano"
+#alias r="ranger"
+#alias sr="sudo ranger"
+alias mkd="mkdir -pv"
+alias c="clear"	
+alias pg="ping google.com"
+alias myip="curl http://ipecho.net/plain; echo"
+
+#alias a="cd /home/artha"
+#alias A="cd /home/Alexandre"
+
+# display all rules #
+alias iptls='sudo /sbin/iptables -L -n -v --line-numbers'
+alias iptlsin='sudo /sbin/iptables -L INPUT -n -v --line-numbers'
+alias iptlsout='sudo /sbin/iptables -L OUTPUT -n -v --line-numbers'
+alias iptlsfw='sudo /sbin/iptables -L FORWARD -n -v --line-numbers'
+alias firewall=iptlist
+
+
+###############
+## Functions ##
+###############
+	
+# search and display syslog for specified $1 argument
+function log(){
+  if [ $# -eq 0 ]
+    then
+	cat /var/log/syslog
+    else
+	cat /var/log/syslog | grep $1
+    fi
+}
+
+# search and display history for specified $1 command/argument
+function h(){
+  if [ $# -eq 0 ]
+    then
+	history
+    else
+	history | grep $1
+  fi
+}
+
+# display current machine/system infos
+function myinfo () {
+  cat /etc/issue | awk '{ printf "OS: %s %s %s %s | " , $1 , $2 , $3 , $4 }'
+  uname -a | awk '{ printf "Kernel: %s " , $3 }'
+  uname -m | awk '{ printf "%s | " , $1 }'
+  printf "\n"
+  uptime | awk '{ printf "Uptime: %s %s %s", $3, $4, $5 }' | sed 's/,//g'
+  printf "\n"
+}
