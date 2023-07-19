@@ -1,0 +1,26 @@
+# ------------------------------------
+# docker alias and function
+# ------------------------------------
+
+###########
+## alias ##
+###########
+
+#list containers
+alias dps='docker ps'
+alias dcls='docker container ls'
+
+#list volumes
+alias dvls='docker volume ls'
+
+#list networks
+alias dnls='docker network ls'
+
+#list swarm nodes
+alias dnls='docker node ls'
+
+#list stacks
+alias dstls='docker stack ls'
+
+#list services
+alias dsl='docker service ls'
